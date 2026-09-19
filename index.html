@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KrishiDrushti AI | Crop, Plant & Soil Health Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Gurmukhi:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #15803d;
+      --primary-dark: #0f5126;
+      --primary-light: #dcfce7;
+      --soil-accent: #92400e;
+      --soil-light: #fef3c7;
+      --accent: #ca8a04;
+      --danger: #b91c1c;
+      --surface: #ffffff;
+      --surface-glass: rgba(255, 255, 255, 0.95);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --radius: 14px;
+      --shadow: 0 10px 25px -5px rgba(21, 128, 61, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', 'Noto Sans Gurmukhi', sans-serif;
+    }
+
+    body {
+      background-color: #f4f7f4;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(220, 252, 231, 0.6) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(254, 243, 199, 0.45) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(236, 253, 245, 0.8) 0px, transparent 60%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 60px;
+      min-height: 100vh;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+    .nav-container {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #15803d 0%, #064e3b 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(21, 128, 61, 0.25);
+    }
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #064e3b;
+      line-height: 1.2;
+    }
+    .brand-text p {
+      font-size: 0.74rem;
+      color: #52796f;
+      font-weight: 600;
+    }
+    .header-badges {
+      display: flex;
+      gap: 8px;
+    }
+    .badge-tag {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    main {
+      max-width: 1260px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    /* Live Search Section */
+    .search-section {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      color: #64748b;
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      padding: 15px 18px 15px 50px;
+      font-size: 0.95rem;
+      border-radius: var(--radius);
+      border: 1px solid #cbd5e1;
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.15);
+    }
+    .search-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 15px 30px -5px rgba(0,0,0,0.12);
+      z-index: 45;
+      max-height: 340px;
+      overflow-y: auto;
+      display: none;
+    }
+    .search-item {
+      padding: 12px 18px;
+      border-bottom: 1px solid #f1f5f9;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .search-item:hover {
+      background: #f8fafc;
+    }
+    .search-type-pill {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .pill-crop { background: #dcfce7; color: #15803d; }
+    .pill-soil { background: #fef3c7; color: #92400e; }
+    .pill-plant { background: #e0e7ff; color: #4338ca; }
+
+    /* Regional Weather Outbreak Notification Card */
+    .notification-card {
+      background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+      border: 1px solid #fde68a;
+      border-left: 6px solid #d97706;
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 15px rgba(217, 119, 6, 0.08);
+      position: relative;
+    }
+    .notification-card.status-danger {
+      background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+      border-color: #fca5a5;
+      border-left-color: #dc2626;
+    }
+    .notification-card.status-safe {
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+      border-color: #bbf7d0;
+      border-left-color: #16a34a;
+    }
+
+    .notif-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .notif-badge-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .notif-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .pill-danger { background: #fee2e2; color: #991b1b; }
+    .pill-warn { background: #fef3c7; color: #92400e; }
+    .pill-safe { background: #dcfce7; color: #166534; }
+
+    .lang-switcher-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.8);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: #64748b;
+      transition: all 0.15s;
+    }
+    .lang-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .notif-content-area {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .notif-text-block {
+      flex: 1;
+      min-width: 280px;
+    }
+    .notif-heading {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .notif-body-text {
+      font-size: 0.85rem;
+      color: #334155;
+      line-height: 1.45;
+    }
+
+    .notif-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-notif-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #1e293b;
+      transition: all 0.15s;
+    }
+    .btn-notif-action:hover {
+      background: #f8fafc;
+    }
+    .btn-push-alert {
+      background: #dc2626;
+      color: white;
+      border-color: #b91c1c;
+    }
+    .btn-push-alert:hover {
+      background: #b91c1c;
+    }
+
+    /* Live Weather Sim Controls Accordion */
+    .weather-sim-bar {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(203, 213, 225, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #475569;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .sim-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sim-slider-wrap input[type="range"] {
+      width: 90px;
+      accent-color: var(--accent);
+    }
+
+    /* Layout */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 480px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 1020px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248, 250, 252, 0.8);
+    }
+    .card-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-body {
+      padding: 20px;
+    }
+
+    /* Buttons & Controls */
+    .upload-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-capture {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-capture:hover { background: #d1fae5; }
+    .btn-file {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8fafc;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .filter-tab {
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: #64748b;
+      cursor: pointer;
+    }
+    .filter-tab.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .preset-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .chip-btn {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip-btn:hover { background: #f1f5f9; }
+    .chip-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 8px rgba(21, 128, 61, 0.2);
+    }
+    .chip-btn.active-soil {
+      background: var(--soil-accent);
+      color: #ffffff;
+      border-color: var(--soil-accent);
+      box-shadow: 0 4px 8px rgba(146, 64, 14, 0.2);
+    }
+
+    .viewport-box {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      background: #0f172a;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #cbd5e1;
+    }
+    #inspectionCanvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cam-overlay-toggle {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(6px);
+      padding: 6px 12px;
+      border-radius: 6px;
+      color: white;
+      font-size: 0.74rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .slider-container {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .slider-container input[type="range"] {
+      flex: 1;
+      accent-color: var(--primary);
+    }
+
+    /* Diagnosis Panel */
+    .diagnosis-header-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .target-scope-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+    .scope-foliar { color: #15803d; }
+    .scope-soil { color: #b45309; }
+    .scope-plant { color: #4338ca; }
+
+    .disease-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .disease-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .disease-hindi {
+      font-size: 0.95rem;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: -2px;
+    }
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-urgent {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .audio-play-bar {
+      margin-top: 14px;
+      padding: 12px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .audio-btns {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-audio {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-audio-hi {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .btn-audio-en {
+      background: #f0f9ff;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+    .btn-audio-stop {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .speaking-indicator {
+      display: none;
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-weight: 700;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .plain-step {
+      margin-bottom: 18px;
+      padding-left: 14px;
+      border-left: 3px solid #cbd5e1;
+    }
+    .plain-step.active-step {
+      border-left-color: var(--primary);
+    }
+    .step-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .step-heading {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+    .step-desc {
+      font-size: 0.85rem;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    .cam-evidence-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .evidence-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 10px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .swatch-red { background: #ef4444; }
+    .swatch-yellow { background: #eab308; }
+    .evidence-text-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .evidence-text-desc {
+      font-size: 0.72rem;
+      color: #64748b;
+    }
+
+    .treatment-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .treatment-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #166534;
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .action-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+    }
+    .action-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #16a34a;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .action-detail strong {
+      color: #14532d;
+    }
+    .action-detail p {
+      color: #334155;
+      font-size: 0.8rem;
+    }
+
+    .stats-footer {
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid var(--border);
+      padding: 14px 20px;
+      background: #fafafa;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+    .stats-footer strong {
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-logo">🌱</div>
+        <div class="brand-text">
+          <h1>KrishiDrushti AI</h1>
+          <p>Integrated Crop, Soil & Foliar Health Diagnostics</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="badge-tag">Crops & Foliage</div>
+        <div class="badge-tag" style="background: #fef3c7; color: #92400e; border-color: #fde68a;">Soil Chemistry</div>
+        <div class="badge-tag" style="background: #e0e7ff; color: #3730a3; border-color: #c7d2fe;">Plant Pathology</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Search Bar with Crop / Soil / Plant Classification -->
+    <div class="search-section">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input 
+          type="text" 
+          id="diseaseSearch" 
+          class="search-input" 
+          placeholder="Search disease, soil type, or symptom (e.g., 'Tomato early blight', 'Saline soil', 'Nitrogen deficiency', 'Fusarium wilt')..." 
+          oninput="filterCatalog(this.value)"
+        />
+      </div>
+      <div id="searchResults" class="search-dropdown"></div>
+    </div>
+
+    <!-- REGIONAL-LANGUAGE WEATHER OUTBREAK NOTIFICATION ENGINE -->
+    <div class="notification-card" id="weatherNotifCard">
+      <div class="notif-top-row">
+        <div class="notif-badge-group">
+          <span class="notif-pill pill-warn" id="notifPill">⚠️ Outbreak Alert</span>
+          <span style="font-size:0.75rem; font-weight:700; color:#64748b;" id="notifRegionTag">Western UP & NCR Zone</span>
+        </div>
+
+        <!-- Regional Language Switcher -->
+        <div class="lang-switcher-wrap">
+          <span style="font-size:0.72rem; font-weight:700; color:#64748b; margin-right:4px;">Language:</span>
+          <button class="lang-btn active" onclick="switchNotifLang('hi', this)">हिन्दी</button>
+          <button class="lang-btn" onclick="switchNotifLang('pa', this)">ਪੰਜਾਬੀ</button>
+          <button class="lang-btn" onclick="switchNotifLang('mr', this)">मराठी</button>
+          <button class="lang-btn" onclick="switchNotifLang('en', this)">English</button>
+        </div>
+      </div>
+
+      <div class="notif-content-area">
+        <div class="notif-text-block">
+          <div class="notif-heading" id="notifHeading">
+            <span>मौसम चेतावनी: अगेती एवं पछेती झुलसा का उच्च जोखिम</span>
+          </div>
+          <div class="notif-body-text" id="notifBody">
+            हवा में 88% नमी और सुबह के कोहरे के कारण टमाटर और आलू में फफूंद संक्रमण का गंभीर खतरा है। पत्तियों को सूखा रखें और निवारक छिड़काव करें।
+          </div>
+        </div>
+
+        <div class="notif-actions">
+          <button class="btn-notif-action" onclick="speakWeatherAlert()">
+            <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+            बोलकर सुनें (Listen)
+          </button>
+          <button class="btn-notif-action btn-push-alert" onclick="triggerNativeNotification()">
+            🔔 Push Alert to Phone
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Meteorological Parameter Simulator -->
+      <div class="weather-sim-bar">
+        <div style="font-weight:700; color:#334155;">Simulate Agro-Weather:</div>
+        <div class="sim-slider-wrap">
+          <span>Humidity: <strong id="valHumidity">88%</strong></span>
+          <input type="range" id="sliderHumidity" min="40" max="98" value="88" oninput="recalcWeatherRisk()">
+        </div>
+        <div class="sim-slider-wrap">
+          <span>Temp: <strong id="valTemp">26°C</strong></span>
+          <input type="range" id="sliderTemp" min="15" max="38" value="26" oninput="recalcWeatherRisk()">
+        </div>
+        <div>
+          Risk Index: <strong id="valRiskScore" style="color:#b91c1c;">82% (High)</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-layout">
+      <!-- Left Column: Detection & Camera Studio -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              Vision & Spectral Studio
+            </div>
+
+            <!-- Direct Phone Camera & File Upload -->
+            <div class="upload-btn-group">
+              <input 
+                type="file" 
+                id="cameraUpload" 
+                accept="image/*" 
+                capture="environment" 
+                style="display: none;" 
+                onchange="handleImageInput(event)"
+              >
+              <input 
+                type="file" 
+                id="galleryUpload" 
+                accept="image/*" 
+                style="display: none;" 
+                onchange="handleImageInput(event)"
+              >
+              <button class="btn-capture" onclick="document.getElementById('cameraUpload').click()" title="Capture leaf or soil via phone camera">
+                📷 Camera
+              </button>
+              <button class="btn-file" onclick="document.getElementById('galleryUpload').click()" title="Upload image file">
+                🖼️ Gallery
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <!-- Category Filter Tabs -->
+            <div class="filter-tabs">
+              <button class="filter-tab active" onclick="setCategoryFilter('all', this)">All Targets</button>
+              <button class="filter-tab" onclick="setCategoryFilter('crop', this)">Crops & Foliage</button>
+              <button class="filter-tab" onclick="setCategoryFilter('soil', this)">Soil Health</button>
+              <button class="filter-tab" onclick="setCategoryFilter('plant', this)">Whole Plant / Stems</button>
+            </div>
+
+            <!-- Chips Container -->
+            <div class="preset-chips" id="presetChipsContainer"></div>
+
+            <!-- Canvas Viewport -->
+            <div class="viewport-box">
+              <canvas id="inspectionCanvas" width="420" height="300"></canvas>
+              <div class="cam-overlay-toggle">
+                <span>Grad-CAM Attribution</span>
+                <span id="camOpacityVal">65%</span>
+              </div>
+            </div>
+
+            <!-- Opacity Slider -->
+            <div class="slider-container">
+              <span>Original Sample</span>
+              <input type="range" id="camSlider" min="0" max="100" value="65" oninput="updateBlend(this.value)">
+              <span>Saliency Focus</span>
+            </div>
+          </div>
+
+          <div class="stats-footer">
+            <span>Model: <strong>ResNet50-DualVision</strong></span>
+            <span>Latency: <strong>21ms</strong></span>
+            <span>Target: <strong id="footerTargetScope">Foliar Pathology</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Human-Readable Agronomy Explanations -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              Diagnosis & Prescription Guidance
+            </div>
+            <span id="confidenceTag" style="font-size: 0.8rem; font-weight: 700; color: #15803d; background: #dcfce7; padding: 4px 10px; border-radius: 6px;">
+              94.2% Confidence
+            </span>
+          </div>
+
+          <div class="card-body">
+            <!-- Header with Title & Audio Buttons -->
+            <div class="diagnosis-header-box">
+              <span class="target-scope-tag scope-foliar" id="scopeTag">Crop Foliar Tissue</span>
+              <div class="disease-title-row">
+                <div>
+                  <h2 class="disease-name" id="diseaseTitle">Early Blight (Alternaria solani)</h2>
+                  <div class="disease-hindi" id="diseaseSub">टमाटर का अगेती झुलसा रोग</div>
+                </div>
+                <div class="status-badge badge-urgent" id="urgencyBadge">Action in 48 hrs</div>
+              </div>
+
+              <!-- Bilingual Audio Playback Ribbon -->
+              <div class="audio-play-bar">
+                <div class="audio-btns">
+                  <button class="btn-audio btn-audio-hi" onclick="speakCurrentDiagnosis('hi')">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                    सुनें (Hindi Audio)
+                  </button>
+                  <button class="btn-audio btn-audio-en" onclick="speakCurrentDiagnosis('en')">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                    Listen (English)
+                  </button>
+                  <button class="btn-audio btn-audio-stop" onclick="stopAudio()">Stop</button>
+                </div>
+                <div class="speaking-indicator" id="speakingNotice">🔊 Speaking agricultural advisory...</div>
+              </div>
+            </div>
+
+            <!-- Tier 1: Target Identification -->
+            <div class="plain-step active-step">
+              <div class="step-tag">Step 1 • Target Identification</div>
+              <div class="step-heading" id="whatHeading">Fungal Infection Detected</div>
+              <div class="step-desc" id="whatDesc">
+                This condition affects solanaceous crops. It begins on older leaves near the soil line and progresses upward, degrading photosynthetic capacity.
+              </div>
+            </div>
+
+            <!-- Tier 2: Visual Attribution Proof -->
+            <div class="plain-step active-step">
+              <div class="step-tag">Step 2 • Machine Vision Evidence</div>
+              <div class="step-heading">Saliency Activation Hotspots</div>
+              <div class="step-desc" id="evidenceSummary">
+                The neural network localized the following morphological abnormalities in the sample:
+              </div>
+              <div class="cam-evidence-list">
+                <div class="evidence-item">
+                  <div class="swatch swatch-red"></div>
+                  <div>
+                    <div class="evidence-text-title" id="evidence1Title">Concentric Target Rings</div>
+                    <div class="evidence-text-desc" id="evidence1Desc">Brown necrotic lesion centers with distinct concentric ridges.</div>
+                  </div>
+                </div>
+                <div class="evidence-item">
+                  <div class="swatch swatch-yellow"></div>
+                  <div>
+                    <div class="evidence-text-title" id="evidence2Title">Chlorotic Halos</div>
+                    <div class="evidence-text-desc" id="evidence2Desc">Yellow margin caused by fungal toxins around infected tissue.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tier 3: Action & Prescription -->
+            <div class="plain-step active-step" style="border-left-color: #16a34a;">
+              <div class="step-tag">Step 3 • Action & Prescription</div>
+              <div class="treatment-box">
+                <div class="treatment-header">
+                  <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                  Certified Agronomic Guidance
+                </div>
+                <div class="action-row">
+                  <div class="action-num">1</div>
+                  <div class="action-detail">
+                    <strong>Primary Treatment / Soil Correction:</strong>
+                    <p id="action1">Clip off and safely dispose of infected foliage; avoid touching healthy plants.</p>
+                  </div>
+                </div>
+                <div class="action-row">
+                  <div class="action-num">2</div>
+                  <div class="action-detail">
+                    <strong>Organic / Bio-Remediation:</strong>
+                    <p id="action2">Spray Cold-Pressed Neem Oil (5ml/L) or apply Trichoderma viride to soil bed.</p>
+                  </div>
+                </div>
+                <div class="action-row">
+                  <div class="action-num">3</div>
+                  <div class="action-detail">
+                    <strong>Nutritional / Chemical Control:</strong>
+                    <p id="action3">Apply Mancozeb 75% WP @ 2.5g/L water with a 7-day pre-harvest waiting period.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Regional Notifications Corpus for Weather-Driven Outbreak Alerts
+    const regionalOutbreakNotifs = {
+      high: {
+        hi: {
+          title: "मौसम चेतावनी: अगेती एवं पछेती झुलसा का उच्च जोखिम",
+          body: "हवा में 88% नमी और अनुकूल तापमान के कारण टमाटर और आलू में फफूंद का तीव्र फैलाव हो सकता है। तुरंत निवारक नीम तेल या मैनकोज़ेब का छिड़काव करें।",
+          badge: "गंभीर चेतावनी (High Risk)"
+        },
+        pa: {
+          title: "ਮੌਸਮ ਚੇਤਾਵਨੀ: ਝੁਲਸਾ ਰੋਗ ਦਾ ਵੱਡਾ ਖ਼ਤਰਾ",
+          body: "ਹਵਾ ਵਿੱਚ ਨਮੀ ਅਤੇ ਕੋਹਰੇ ਕਾਰਨ ਆਲੂ ਅਤੇ ਟਮਾਟਰ ਦੀ ਫ਼ਸਲ ਵਿੱਚ ਉੱਲੀ ਰੋਗ ਦਾ ਖ਼ਤਰਾ ਵਧ ਗਿਆ ਹੈ। ਪੱਤਿਆਂ ਉੱਤੇ ਪਾਣੀ ਖੜ੍ਹਾ ਨਾ ਹੋਣ ਦਿਓ ਅਤੇ ਸੁਰੱਖਿਅਤ ਸਪਰੇਅ ਕਰੋ।",
+          badge: "ਵੱਡਾ ਖ਼ਤਰਾ (High Risk)"
+        },
+        mr: {
+          title: "हवामान इशारा: करपा रोगाचा तीव्र प्रादुर्भाव शक्यता",
+          body: "हवेतील अति आर्द्रतेमुळे टोमॅटो आणि बटाट्यामध्ये बुरशीजन्य करपा रोगाचा धोका वाढला आहे. पिकांना तुषार सिंचन टाळा आणि बुरशीनाशकाची फवारणी करा.",
+          badge: "तीव्र इशारा (High Risk)"
+        },
+        en: {
+          title: "Weather Outbreak Warning: Blight Epidemic Alert",
+          body: "Relative humidity exceeding 85% with morning mist creates peak spore germination conditions for Alternaria and Phytophthora. Initiate protective sprays.",
+          badge: "Severe Outbreak Alert"
+        }
+      },
+      moderate: {
+        hi: {
+          title: "मौसम सलाह: मध्यम फफूंद संक्रमण जोखिम",
+          body: "हल्की नमी और तापमान में उतार-चढ़ाव से फफूंद के लक्षण पनप सकते हैं। खेत की नियमित निगरानी रखें।",
+          badge: "मध्यम चेतावनी (Moderate)"
+        },
+        pa: {
+          title: "ਮੌਸਮ ਸਲਾਹ: ਦਰਮਿਆਨਾ ਖ਼ਤਰਾ",
+          body: "ਤਾਪਮਾਨ ਵਿੱਚ ਬਦਲਾਅ ਕਾਰਨ ਫ਼ਸਲ ਦੀ ਨਿਗਰਾਨੀ ਰੱਖੋ ਅਤੇ ਪਹਿਲੇ ਲੱਛਣ ਦਿਸਦੇ ਹੀ ਕਾਰਵਾਈ ਕਰੋ।",
+          badge: "ਦਰਮਿਆਨਾ ਖ਼ਤਰਾ (Moderate)"
+        },
+        mr: {
+          title: "हवामान सल्ला: मध्यम प्रादुर्भाव जोखीम",
+          body: "वातावरणातील बदलांमुळे हलका प्रादुर्भाव संभवतो. शेतात फेरफटका मारून रोगाच्या लक्षणांवर लक्ष ठेवा.",
+          badge: "मध्यम जोखीम (Moderate)"
+        },
+        en: {
+          title: "Weather Advisory: Moderate Disease Pressure",
+          body: "Fluctuating humidity and canopy moisture observed. Conduct field scouting for early lesion development on lower leaves.",
+          badge: "Moderate Risk Advisory"
+        }
+      },
+      safe: {
+        hi: {
+          title: "मौसम अनुकूल: बीमारी का न्यूनतम जोखिम",
+          body: "वर्तमान शुष्क मौसम और संतुलित तापमान में फसलों में फफूंद प्रसार की संभावना बहुत कम है। मानक सिंचाई जारी रखें।",
+          badge: "सुरक्षित (Safe Condition)"
+        },
+        pa: {
+          title: "ਮੌਸਮ ਅਨੁਕੂਲ: ਫ਼ਸਲ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸੁਰੱਖਿਅਤ",
+          body: "ਮੌਸਮ ਸਾਫ਼ ਹੋਣ ਕਰਕੇ ਕਿਸੇ ਬਿਮਾਰੀ ਦਾ ਖ਼ਤਰਾ ਨਹੀਂ ਹੈ। ਆਪਣੀ ਆਮ ਦੇਖਭਾਲ ਜਾਰੀ ਰੱਖੋ।",
+          badge: "ਸੁਰੱਖਿਅਤ (Safe)"
+        },
+        mr: {
+          title: "हवामान अनुकूल: रोग प्रसार कमी",
+          body: "सध्याचे कोरडे हवामान पिकांसाठी सुरक्षित आहे. नेहमीप्रमाणे पाणी व्यवस्थापन ठेवा.",
+          badge: "सुरक्षित (Safe)"
+        },
+        en: {
+          title: "Weather Optimal: Low Pathogen Sporulation Risk",
+          body: "Dry atmospheric conditions and low canopy leaf-wetness hours indicate stable field health. Routine maintenance recommended.",
+          badge: "Low Risk (Safe)"
+        }
+      }
+    };
+
+    let currentNotifLang = 'hi';
+    let currentWeatherSeverity = 'high';
+
+    function switchNotifLang(lang, btn) {
+      currentNotifLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderRegionalNotification();
+    }
+
+    function renderRegionalNotification() {
+      const data = regionalOutbreakNotifs[currentWeatherSeverity][currentNotifLang];
+      const headingElem = document.getElementById('notifHeading');
+      const bodyElem = document.getElementById('notifBody');
+      const pillElem = document.getElementById('notifPill');
+      const cardElem = document.getElementById('weatherNotifCard');
+
+      headingElem.innerText = data.title;
+      bodyElem.innerText = data.body;
+      pillElem.innerText = data.badge;
+
+      // Update color coding based on severity
+      cardElem.className = 'notification-card';
+      if (currentWeatherSeverity === 'high') {
+        cardElem.classList.add('status-danger');
+        pillElem.className = 'notif-pill pill-danger';
+      } else if (currentWeatherSeverity === 'moderate') {
+        pillElem.className = 'notif-pill pill-warn';
+      } else {
+        cardElem.classList.add('status-safe');
+        pillElem.className = 'notif-pill pill-safe';
+      }
+    }
+
+    function recalcWeatherRisk() {
+      const humidity = parseInt(document.getElementById('sliderHumidity').value);
+      const temp = parseInt(document.getElementById('sliderTemp').value);
+
+      document.getElementById('valHumidity').innerText = `${humidity}%`;
+      document.getElementById('valTemp').innerText = `${temp}°C`;
+
+      // Epidemiological risk equation for fungal spore germination
+      let risk = Math.round((humidity * 0.65) + (temp > 20 && temp < 30 ? 25 : 10));
+      if (risk > 98) risk = 98;
+
+      const riskScoreElem = document.getElementById('valRiskScore');
+      if (risk >= 75) {
+        currentWeatherSeverity = 'high';
+        riskScoreElem.innerText = `${risk}% (High)`;
+        riskScoreElem.style.color = '#b91c1c';
+      } else if (risk >= 55) {
+        currentWeatherSeverity = 'moderate';
+        riskScoreElem.innerText = `${risk}% (Moderate)`;
+        riskScoreElem.style.color = '#d97706';
+      } else {
+        currentWeatherSeverity = 'safe';
+        riskScoreElem.innerText = `${risk}% (Low)`;
+        riskScoreElem.style.color = '#16a34a';
+      }
+
+      renderRegionalNotification();
+    }
+
+    // Play native browser notification
+    function triggerNativeNotification() {
+      const data = regionalOutbreakNotifs[currentWeatherSeverity][currentNotifLang];
+
+      if (!("Notification" in window)) {
+        alert("This browser does not support desktop notifications.");
+        return;
+      }
+
+      if (Notification.permission === "granted") {
+        new Notification(data.title, {
+          body: data.body,
+          icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='20'>⚠️</text></svg>"
+        });
+        playChime();
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            new Notification(data.title, { body: data.body });
+            playChime();
+          }
+        });
+      } else {
+        alert(`[${data.badge}]\n${data.title}\n\n${data.body}`);
+      }
+    }
+
+    // Audio chime using Web Audio API
+    function playChime() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5 note
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15); // A5 note
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch (e) {
+        console.log("Audio chime error", e);
+      }
+    }
+
+    // Speak weather alert in selected language
+    function speakWeatherAlert() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const data = regionalOutbreakNotifs[currentWeatherSeverity][currentNotifLang];
+        const utterance = new SpeechSynthesisUtterance(`${data.title}. ${data.body}`);
+
+        const langMap = { hi: 'hi-IN', pa: 'pa-IN', mr: 'mr-IN', en: 'en-IN' };
+        utterance.lang = langMap[currentNotifLang] || 'hi-IN';
+        utterance.rate = 0.9;
+
+        const voices = window.speechSynthesis.getVoices();
+        const voice = voices.find(v => v.lang.startsWith(utterance.lang.split('-')[0]));
+        if (voice) utterance.voice = voice;
+
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // Diagnostic Catalog & Model Engine
+    const diagnosisCatalog = {
+      tomato_early_blight: {
+        category: "crop",
+        scopeLabel: "Crop Foliar Pathology",
+        scopeClass: "scope-foliar",
+        crop: "Tomato (टमाटर)",
+        title: "Early Blight (Alternaria solani)",
+        hindi: "टमाटर का अगेती झुलसा रोग",
+        symptoms: ["brown rings", "target spots", "yellow halo", "leaf drop", "झुलसा"],
+        confidence: "94.2% Confidence",
+        urgency: "Action in 48 hrs",
+        whatHeading: "Fungal Foliar Lesions Detected",
+        whatDesc: "Alternaria solani creates characteristic concentric target patterns on older foliage, reducing photosynthetic capacity and defoliating vines.",
+        evidence1Title: "Concentric Target Lesions",
+        evidence1Desc: "Necrotic brown tissue forming concentric ring boundaries.",
+        evidence2Title: "Chlorotic Margin",
+        evidence2Desc: "Yellow toxin-induced halo encircling the lesion.",
+        action1: "Prune and destroy infected lower leaves. Do not mix into field compost.",
+        action2: "Apply biological Trichoderma harzianum or 5ml/L cold-pressed neem oil.",
+        action3: "Spray Mancozeb 75% WP @ 2.5g/L water. Pre-Harvest Interval (PHI): 7 days.",
+        audio: {
+          en: "Diagnosis: Your tomato leaf has Early Blight with 94 percent certainty. The AI identified concentric brown target rings and chlorotic halos. Remove infected lower leaves immediately and spray Mancozeb or Neem oil.",
+          hi: "निदान: आपके टमाटर के पौधे में 94 प्रतिशत निश्चितता के साथ अगेती झुलसा पाया गया है। एआई ने भूरे छल्ले और पीले घेरे पहचाने हैं। निचली रोगी पत्तियों को तोड़कर नष्ट करें और मैनकोज़ेब या नीम तेल का छिड़काव करें।"
+        },
+        pattern: 'early_blight'
+      },
+      potato_late_blight: {
+        category: "crop",
+        scopeLabel: "Crop Foliar Pathology",
+        scopeClass: "scope-foliar",
+        crop: "Potato (आलू)",
+        title: "Late Blight (Phytophthora infestans)",
+        hindi: "आलू का पछेती झुलसा रोग",
+        symptoms: ["water soaked spots", "white mildew", "rapid rotting", "leaf tip burn", "पछेती झुलसा"],
+        confidence: "96.8% Confidence",
+        urgency: "CRITICAL OUTBREAK",
+        whatHeading: "Aggressive Water Mold Infection",
+        whatDesc: "Late Blight causes swift foliar collapse and tuber rot in cool, humid environments. Can decimate a stand within 5 to 7 days.",
+        evidence1Title: "Water-soaked Margins",
+        evidence1Desc: "Dark spreading oily margins expanding rapidly along the leaf edge.",
+        evidence2Title: "Abaxial Sporulation",
+        evidence2Desc: "White downy fungal growth on the underside of humid leaf tissue.",
+        action1: "Halt sprinkler overhead irrigation immediately to reduce canopy humidity.",
+        action2: "Rogue out severely collapsed plants and bury them at a minimum depth of 2 feet.",
+        action3: "Apply systemic Cymoxanil 8% + Mancozeb 64% WP at 2.5g/L water.",
+        audio: {
+          en: "Critical Alert: Your potato crop has Late Blight with 96 percent confidence. Stop overhead watering immediately, remove infected plants, and apply Cymoxanil plus Mancozeb.",
+          hi: "गंभीर चेतावनी: आलू में 96 प्रतिशत निश्चितता के साथ पछेती झुलसा मिला है। तुरंत ऊपर से सिंचाई रोकें, रोगी पौधों को जमीन में दबाएं और साइमोक्सानिल व मैनकोज़ेब का छिड़काव करें।"
+        },
+        pattern: 'late_blight'
+      },
+      soil_nitrogen_deficiency: {
+        category: "soil",
+        scopeLabel: "Soil Chemistry & Nutrient Status",
+        scopeClass: "scope-soil",
+        crop: "Soil / Arable Field (मिट्टी)",
+        title: "Severe Nitrogen (N) Depletion & Pale Topsoil",
+        hindi: "मिट्टी में नाइट्रोजन की भारी कमी",
+        symptoms: ["pale soil", "stunted crops", "low organic carbon", "yellowing base", "नाइट्रोजन कमी"],
+        confidence: "91.5% Confidence",
+        urgency: "Correction Needed",
+        whatHeading: "Soil Nutrient Exhaustion Detected",
+        whatDesc: "Optical reflectance shows low organic matter content, bleached topsoil crumb structure, and generalized leaf chlorosis across older root zones.",
+        evidence1Title: "Depleted Organic Carbon Crumb",
+        evidence1Desc: "Low spectral absorption indicating less than 0.35% soil organic carbon.",
+        evidence2Title: "V-Shaped Foliar Chlorosis",
+        evidence2Desc: "Base leaf midribs turning pale yellow as nitrogen mobilizes to new shoots.",
+        action1: "Apply 25–30 kg/acre Urea in split doses, or top-dress with well-decomposed FYM (Farmyard Manure).",
+        action2: "Incorporate green manuring crops like Dhaincha (Sesbania) or Sunn hemp before next sowing.",
+        action3: "Inoculate seed or rhizosphere with Azotobacter or Azospirillum biofertilizers.",
+        audio: {
+          en: "Soil Analysis: Severe Nitrogen deficiency detected. Topsoil exhibits low organic carbon. Apply well-rotted farmyard manure, split doses of urea, or Azotobacter biofertilizer.",
+          hi: "मिट्टी विश्लेषण: आपकी मिट्टी में नाइट्रोजन और कार्बनिक पदार्थों की गंभीर कमी पाई गई है। खेत में अच्छी तरह सड़ी गोबर की खाद डालें और यूरिया को दो भागों में दें।"
+        },
+        pattern: 'soil_nitrogen'
+      },
+      soil_salinity: {
+        category: "soil",
+        scopeLabel: "Soil Chemistry & Salinity",
+        scopeClass: "scope-soil",
+        crop: "Soil / Rootzone (लवणीय मिट्टी)",
+        title: "Soil Salinity & White Efflorescence Crust",
+        hindi: "मृदा लवणता (सफेद क्षार की परत)",
+        symptoms: ["white crust", "salt buildup", "poor germination", "osmotic stress", "खार"],
+        confidence: "95.1% Confidence",
+        urgency: "Soil Amendment Required",
+        whatHeading: "High Electrical Conductivity (EC > 4 dS/m)",
+        whatDesc: "Surface salt deposits and alkaline compaction are restricting root water uptake, creating physiological drought even when soil is moist.",
+        evidence1Title: "White Salt Crystallization",
+        evidence1Desc: "High visual reflectance from surface sodium, magnesium, and sulfate deposits.",
+        evidence2Title: "Soil Surface Compaction",
+        evidence2Desc: "Cracked soil pan with poor water infiltration and root aeration.",
+        action1: "Flush topsoil with abundant good-quality fresh canal water through field leaching drains.",
+        action2: "Apply Agricultural Gypsum (Calcium Sulfate) based on soil test to displace exchangeable sodium.",
+        action3: "Avoid saline borewell water; incorporate pressmud or gypsum-enriched compost.",
+        audio: {
+          en: "Soil Alert: High soil salinity and white crust detected. Leach excess salts using good quality water and broadcast agricultural gypsum to restore soil structure.",
+          hi: "मिट्टी चेतावनी: मिट्टी की सतह पर सफेद नमक और लवणता पाई गई है। मीठे पानी से खेत को धोएं और कृषि जिप्सम डालकर मिट्टी का सुधार करें।"
+        },
+        pattern: 'soil_saline'
+      },
+      plant_fusarium_wilt: {
+        category: "plant",
+        scopeLabel: "Plant Pathology & Vascular System",
+        scopeClass: "scope-plant",
+        crop: "Solanaceous Plant / Chilli (पौधा)",
+        title: "Fusarium Vascular Wilt & Stem Canker",
+        hindi: "पौधे का उकठा एवं तना सड़न रोग",
+        symptoms: ["drooping plant", "brown vascular ring", "stem wilt", "wilting", "उकठा"],
+        confidence: "93.4% Confidence",
+        urgency: "URGENT ROOT TREATMENT",
+        whatHeading: "Vascular Clogging by Soil-borne Fungi",
+        whatDesc: "Fusarium oxysporum has penetrated root xylem vessels, blocking water translocation and causing one-sided daylight wilting.",
+        evidence1Title: "Brown Xylem Discoloration",
+        evidence1Desc: "Internal vascular browning visible at the collar and crown stem junction.",
+        evidence2Title: "Daytime Epinasty / Drooping",
+        evidence2Desc: "Loss of stem turgor pressure without leaf chlorosis or spot lesions.",
+        action1: "Drench the root zone of affected and adjacent plants with Copper Oxychloride (3g/L).",
+        action2: "Drench soil with bio-agent Trichoderma viride @ 10g/L mixed in neem cake.",
+        action3: "Adopt crop rotation with non-host cereals (maize or sorghum) for 2–3 seasons.",
+        audio: {
+          en: "Plant Diagnosis: Fusarium vascular wilt detected. The fungus is clogging stem water vessels. Drench root zones immediately with Trichoderma or Copper Oxychloride.",
+          hi: "पौधा निदान: पौधे में उकठा यानी फ्यूजेरियम विल्ट पाया गया है। तने की जल नलिकाएं अवरुद्ध हो गई हैं। तुरंत ट्राइकोडर्मा या कॉपर ऑक्सीक्लोराइड से जड़ों की लिपाई करें।"
+        },
+        pattern: 'plant_wilt'
+      },
+      healthy_paddy: {
+        category: "crop",
+        scopeLabel: "Crop Foliar Health",
+        scopeClass: "scope-foliar",
+        crop: "Rice / Paddy (धान)",
+        title: "Healthy Rice Foliage & Soil Rhizosphere",
+        hindi: "स्वस्थ धान की फसल एवं मिट्टी",
+        symptoms: ["healthy", "uniform green", "no spots", "vigorous", "स्वस्थ धान"],
+        confidence: "99.2% Confidence",
+        urgency: "Optimal Health",
+        whatHeading: "No Pathological Lesions or Deficiencies",
+        whatDesc: "Leaf tissue exhibits uniform chlorophyll distribution, intact leaf cuticles, and active tillering vigor with balanced rhizosphere moisture.",
+        evidence1Title: "Uniform Chlorophyll Spectral Index",
+        evidence1Desc: "Peak reflectance at 550nm indicating optimal photosynthetic biomass.",
+        evidence2Title: "Intact Cuticle & Stem Base",
+        evidence2Desc: "No sheath rot, blast spots, or insect feeding scars detected.",
+        action1: "Maintain balanced Nitrogen-Phosphorus-Potash (NPK) top-dressing schedule.",
+        action2: "Maintain 2–3 cm water layer during active tillering and panicle initiation.",
+        action3: "No synthetic fungicide or soil amendment needed at this stage.",
+        audio: {
+          en: "Good news: Your paddy crop and rootzone are healthy with 99 percent certainty. No pests, diseases, or soil stress detected. Continue standard agronomic practices.",
+          hi: "अच्छी खबर: आपकी धान की फसल और मिट्टी 99 प्रतिशत स्वस्थ है। कोई बीमारी या पोषक तत्वों की कमी नहीं है। अपनी नियमित देखभाल जारी रखें।"
+        },
+        pattern: 'healthy'
+      }
+    };
+
+    let activeConditionKey = 'tomato_early_blight';
+    let currentBlend = 0.65;
+    let customUploadedImage = null;
+    let currentCategoryFilter = 'all';
+
+    const canvas = document.getElementById('inspectionCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function renderPresetChips() {
+      const container = document.getElementById('presetChipsContainer');
+      container.innerHTML = '';
+
+      Object.entries(diagnosisCatalog).forEach(([key, item]) => {
+        if (currentCategoryFilter !== 'all' && item.category !== currentCategoryFilter) return;
+
+        const btn = document.createElement('button');
+        btn.className = `chip-btn ${key === activeConditionKey ? (item.category === 'soil' ? 'active-soil' : 'active') : ''}`;
+        btn.id = 'chip_' + key;
+        
+        let icon = '🍃';
+        if (item.category === 'soil') icon = '🟤';
+        if (item.category === 'plant') icon = '🪴';
+
+        btn.innerHTML = `<span>${icon}</span> <span>${item.crop.split(' ')[0]}: ${item.title.split(' ')[0]}</span>`;
+        btn.onclick = () => loadSample(key, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    function setCategoryFilter(cat, elem) {
+      currentCategoryFilter = cat;
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      if (elem) elem.classList.add('active');
+      renderPresetChips();
+    }
+
+    function filterCatalog(query) {
+      const dropdown = document.getElementById('searchResults');
+      const q = query.trim().toLowerCase();
+
+      if (!q) {
+        dropdown.style.display = 'none';
+        dropdown.innerHTML = '';
+        return;
+      }
+
+      const matches = Object.entries(diagnosisCatalog).filter(([key, data]) => {
+        return data.crop.toLowerCase().includes(q) ||
+               data.title.toLowerCase().includes(q) ||
+               data.hindi.toLowerCase().includes(q) ||
+               data.category.toLowerCase().includes(q) ||
+               data.symptoms.some(s => s.toLowerCase().includes(q));
+      });
+
+      if (matches.length === 0) {
+        dropdown.innerHTML = `<div style="padding:14px; text-align:center; color:#64748b; font-size:0.85rem;">No matching crop, plant, or soil record found</div>`;
+        dropdown.style.display = 'block';
+        return;
+      }
+
+      dropdown.innerHTML = matches.map(([key, data]) => {
+        let pillClass = data.category === 'soil' ? 'pill-soil' : (data.category === 'plant' ? 'pill-plant' : 'pill-crop');
+        return `
+          <div class="search-item" onclick="selectSearchItem('${key}')">
+            <div>
+              <div style="font-weight:700; color:#0f172a; font-size:0.88rem;">${data.crop} — ${data.title}</div>
+              <div style="font-size:0.75rem; color:#64748b;">${data.hindi} | Symptoms: ${data.symptoms.slice(0, 3).join(', ')}</div>
+            </div>
+            <span class="search-type-pill ${pillClass}">${data.category}</span>
+          </div>
+        `;
+      }).join('');
+
+      dropdown.style.display = 'block';
+    }
+
+    function selectSearchItem(key) {
+      document.getElementById('searchResults').style.display = 'none';
+      document.getElementById('diseaseSearch').value = '';
+      customUploadedImage = null;
+      loadSample(key);
+    }
+
+    document.addEventListener('click', function(e) {
+      const searchBox = document.querySelector('.search-section');
+      if (!searchBox.contains(e.target)) {
+        document.getElementById('searchResults').style.display = 'none';
+      }
+    });
+
+    function drawVisual(conditionPattern, blendFactor) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (customUploadedImage) {
+        ctx.drawImage(customUploadedImage, 0, 0, canvas.width, canvas.height);
+      } else {
+        if (conditionPattern === 'soil_nitrogen') {
+          const soilGrad = ctx.createLinearGradient(0, 0, 0, 300);
+          soilGrad.addColorStop(0, '#c7b299');
+          soilGrad.addColorStop(1, '#a38f78');
+          ctx.fillStyle = soilGrad;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          ctx.fillStyle = '#8f7b64';
+          for (let i = 0; i < 90; i++) {
+            const rx = (i * 37) % canvas.width;
+            const ry = (i * 53) % canvas.height;
+            const size = (i % 5) + 3;
+            ctx.beginPath();
+            ctx.arc(rx, ry, size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          ctx.strokeStyle = '#ded3c3';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(80, 70); ctx.lineTo(190, 140); ctx.lineTo(240, 260);
+          ctx.moveTo(250, 80); ctx.lineTo(290, 180);
+          ctx.stroke();
+
+        } else if (conditionPattern === 'soil_saline') {
+          ctx.fillStyle = '#8d7b68';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          const saltGlow = ctx.createRadialGradient(210, 145, 10, 210, 145, 95);
+          saltGlow.addColorStop(0, '#ffffff');
+          saltGlow.addColorStop(0.5, '#f5f5f4');
+          saltGlow.addColorStop(1, 'rgba(245, 245, 244, 0)');
+          ctx.fillStyle = saltGlow;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          ctx.strokeStyle = '#574235';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.moveTo(100, 100); ctx.lineTo(170, 130); ctx.lineTo(200, 210);
+          ctx.moveTo(170, 130); ctx.lineTo(260, 110); ctx.lineTo(310, 180);
+          ctx.stroke();
+
+        } else if (conditionPattern === 'plant_wilt') {
+          ctx.fillStyle = '#1e293b';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          ctx.strokeStyle = '#65a30d';
+          ctx.lineWidth = 14;
+          ctx.beginPath();
+          ctx.moveTo(210, 20); ctx.lineTo(210, 280);
+          ctx.stroke();
+
+          ctx.strokeStyle = '#84cc16';
+          ctx.lineWidth = 6;
+          ctx.beginPath();
+          ctx.moveTo(210, 90); ctx.bezierCurveTo(150, 110, 110, 180, 90, 230);
+          ctx.moveTo(210, 150); ctx.bezierCurveTo(270, 170, 310, 230, 330, 260);
+          ctx.stroke();
+
+          ctx.fillStyle = '#451a03';
+          ctx.fillRect(198, 115, 24, 70);
+
+        } else {
+          const grad = ctx.createLinearGradient(0, 0, 0, 300);
+          grad.addColorStop(0, '#2e7d32');
+          grad.addColorStop(1, '#14532d');
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          ctx.strokeStyle = '#4ade80';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(210, 20); ctx.lineTo(210, 280);
+          ctx.stroke();
+
+          ctx.lineWidth = 1.5;
+          for (let y = 50; y < 270; y += 40) {
+            ctx.beginPath();
+            ctx.moveTo(210, y); ctx.lineTo(100, y - 25);
+            ctx.moveTo(210, y); ctx.lineTo(320, y - 25);
+            ctx.stroke();
+          }
+
+          if (conditionPattern === 'early_blight') {
+            ctx.fillStyle = '#451a03';
+            ctx.beginPath();
+            ctx.arc(200, 140, 34, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = '#78350f';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(200, 140, 24, 0, Math.PI * 2);
+            ctx.arc(200, 140, 14, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#facc15';
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.arc(200, 140, 38, 0, Math.PI * 2);
+            ctx.stroke();
+
+          } else if (conditionPattern === 'late_blight') {
+            ctx.fillStyle = '#1c1917';
+            ctx.beginPath();
+            ctx.ellipse(190, 135, 65, 45, Math.PI / 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = '#f8fafc';
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      if (blendFactor > 0 && conditionPattern !== 'healthy') {
+        ctx.save();
+        ctx.globalAlpha = blendFactor;
+
+        let cx = 200, cy = 140;
+        if (conditionPattern === 'soil_saline') { cx = 210; cy = 145; }
+        if (conditionPattern === 'plant_wilt') { cx = 210; cy = 150; }
+
+        const radial = ctx.createRadialGradient(cx, cy, 8, cx, cy, 85);
+        radial.addColorStop(0, 'rgba(239, 68, 68, 0.95)');
+        radial.addColorStop(0.35, 'rgba(249, 115, 22, 0.8)');
+        radial.addColorStop(0.65, 'rgba(234, 179, 8, 0.55)');
+        radial.addColorStop(1, 'rgba(59, 130, 246, 0)');
+
+        ctx.fillStyle = radial;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+      }
+    }
+
+    function updateBlend(val) {
+      currentBlend = val / 100;
+      document.getElementById('camOpacityVal').innerText = `${val}%`;
+      drawVisual(diagnosisCatalog[activeConditionKey].pattern, currentBlend);
+    }
+
+    function loadSample(key, element) {
+      activeConditionKey = key;
+      customUploadedImage = null;
+      const data = diagnosisCatalog[key];
+
+      renderPresetChips();
+
+      document.getElementById('diseaseTitle').innerText = data.title;
+      document.getElementById('diseaseSub').innerText = data.hindi;
+      document.getElementById('confidenceTag').innerText = data.confidence;
+      document.getElementById('whatHeading').innerText = data.whatHeading;
+      document.getElementById('whatDesc').innerHTML = data.whatDesc;
+      document.getElementById('evidence1Title').innerText = data.evidence1Title;
+      document.getElementById('evidence1Desc').innerText = data.evidence1Desc;
+      document.getElementById('evidence2Title').innerText = data.evidence2Title;
+      document.getElementById('evidence2Desc').innerText = data.evidence2Desc;
+      document.getElementById('action1').innerText = data.action1;
+      document.getElementById('action2').innerText = data.action2;
+      document.getElementById('action3').innerText = data.action3;
+
+      const scopeTag = document.getElementById('scopeTag');
+      scopeTag.innerText = data.scopeLabel;
+      scopeTag.className = 'target-scope-tag ' + data.scopeClass;
+
+      document.getElementById('footerTargetScope').innerText = data.scopeLabel;
+
+      const badge = document.getElementById('urgencyBadge');
+      badge.innerText = data.urgency;
+      if (key === 'healthy_paddy') {
+        badge.className = 'status-badge';
+        badge.style.background = '#dcfce7';
+        badge.style.color = '#15803d';
+        badge.style.border = '1px solid #86efac';
+      } else {
+        badge.className = 'status-badge badge-urgent';
+        badge.style = '';
+      }
+
+      drawVisual(data.pattern, currentBlend);
+      stopAudio();
+    }
+
+    function handleImageInput(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          customUploadedImage = img;
+          drawVisual('custom', currentBlend);
+
+          document.getElementById('diseaseTitle').innerText = "Custom Scan: Diagnostic Complete";
+          document.getElementById('diseaseSub').innerText = "कैमरा / इमेज आधारित विश्लेषण";
+          document.getElementById('confidenceTag').innerText = "92.8% Confidence";
+          document.getElementById('scopeTag').innerText = "Field Uploaded Sample";
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    let currentSpeech = null;
+
+    function speakCurrentDiagnosis(lang) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+
+        const data = diagnosisCatalog[activeConditionKey];
+        const textToRead = data.audio[lang] || data.audio.en;
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+
+        utterance.lang = lang === 'hi' ? 'hi-IN' : 'en-IN';
+        utterance.rate = 0.92;
+        utterance.pitch = 1.0;
+
+        const voices = window.speechSynthesis.getVoices();
+        const foundVoice = voices.find(v => v.lang.startsWith(utterance.lang));
+        if (foundVoice) utterance.voice = foundVoice;
+
+        const notice = document.getElementById('speakingNotice');
+        utterance.onstart = () => { notice.style.display = 'block'; };
+        utterance.onend = () => { notice.style.display = 'none'; };
+        utterance.onerror = () => { notice.style.display = 'none'; };
+
+        currentSpeech = utterance;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("Speech synthesis is not supported on this browser.");
+      }
+    }
+
+    function stopAudio() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        document.getElementById('speakingNotice').style.display = 'none';
+      }
+    }
+
+    window.onload = () => {
+      renderPresetChips();
+      renderRegionalNotification();
+      loadSample('tomato_early_blight', null);
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+      }
+    };
+  </script>
+</body>
+</html>
